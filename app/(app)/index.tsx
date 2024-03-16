@@ -1,14 +1,19 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Pressable } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import { supabase } from "../../lib/supabase";
 
-export default function TabTwoScreen() {
+export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
+      <Pressable
+        onPress={() => supabase.auth.signOut()}
+      >
+        <Text>Sign out</Text>
+      </Pressable>
+      <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <EditScreenInfo path="app/(app)/index.tsx" />
     </View>
   );
 }
