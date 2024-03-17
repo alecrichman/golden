@@ -1,7 +1,6 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs, Redirect } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs, Redirect } from 'expo-router';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -22,7 +21,7 @@ export default function TabLayout() {
   const { authStore } = useStores();
 
   if (!authStore.isAuthenticated) {
-    return <Redirect href="./(auth)/logIn" />;
+    return <Redirect href="./(auth)/signIn" />;
   }
 
   return (

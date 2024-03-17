@@ -20,8 +20,8 @@ export const AuthStoreModel = types
         setRefreshToken(value?: string) {
             store.refreshToken = value
         },
-        setEmail(value: string) {
-            store.email = value.replace(/ /g, "")
+        setEmail(value?: string) {
+            store.email = value
         },
         setId(value?: string) {
             store.id = value

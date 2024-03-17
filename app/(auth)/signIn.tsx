@@ -14,7 +14,7 @@ import {
 import { supabase } from "../../lib/supabase";
 import { useStores } from "../../models";
 
-export const Login = observer(() => {
+export const SignIn = observer(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,6 @@ export const Login = observer(() => {
 
   async function signInWithEmail() {
     setLoading(true);
-
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -32,14 +31,13 @@ export const Login = observer(() => {
     if (error) {
       Alert.alert(error.message);
       setLoading(false);
-    } else if (data && data.user && data.session) {
-      const userData = {
-        email: data.user.email || "",
-        id: data.user.id,
-      };
+    } else if (data.session && data.user) {
       authStore.setAccessToken(data.session.access_token);
-      setLoading(false);
+      authStore.setRefreshToken(data.session.refresh_token);
+      authStore.setEmail(data.user.email);
+      authStore.setId(data.user.id);
     }
+    setLoading(false);
   }
 
   return (
@@ -67,14 +65,23 @@ export const Login = observer(() => {
         />
         <Button
           title="Log In"
+          onPress={() => {
+            signInWithEmail();
+            router.replace("/");
+          }}
           disabled={loading}
         />
+        <Link href="./signUp" asChild>
+          <Button
+            title="Sign Up"
+            disabled={loading} />
+        </Link>
       </View>
     </Pressable>
   );
 });
 
-export default Login;
+export default SignIn;
 
 const styles = StyleSheet.create({
   input: {
